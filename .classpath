@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="workspaced/Calculator/src"/>
+	<classpathentry kind="src" path="workspaced/TestGui/src"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf/weblaf-core-1.2.13.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf/weblaf-ui-1.2.13.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf-depend/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf-depend/java-image-scaling-0.8.6.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf-depend/jericho-html-3.3.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf-depend/rsyntaxtextarea-2.6.1.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf-depend/slf4j-api-1.7.27.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf-depend/slf4j-simple-1.7.27.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf-depend/svg-salamander-1.1.2.2.jar"/>
+	<classpathentry kind="lib" path="workspaced/TestGui/weblaf-depend/xstream-1.4.12.jar"/>
+	<classpathentry kind="output" path="workspaced/Calculator/bin"/>
+</classpath>

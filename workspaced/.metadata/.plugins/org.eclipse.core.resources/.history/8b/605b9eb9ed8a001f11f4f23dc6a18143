@@ -1,0 +1,202 @@
+//import java.awt.EventQueue;
+//
+//import javax.swing.JFrame;
+//import javax.swing.JPanel;
+//import javax.swing.border.EmptyBorder;
+//
+//public class Calculator extends JFrame {
+//
+//	private static final long serialVersionUID = 1L;
+//	private JPanel contentPane;
+//
+//	/**
+//	 * Launch the application.
+//	 */
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					Calculator frame = new Calculator();
+//					frame.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
+//
+//	/**
+//	 * Create the frame.
+//	 */
+//	public Calculator() {
+//		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		setBounds(100, 100, 450, 300);
+//		contentPane = new JPanel();
+//		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+//
+//		setContentPane(contentPane);
+//		contentPane.setLayout(null);
+//	}
+//
+//}
+
+
+
+
+
+
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
+public class Calculator extends JFrame {
+
+    private JTextField display;
+    private Calculator calculator;
+    private double currentResult;
+    private String operator;
+
+    public Calculator() {
+        calculator = new Calculator();
+        currentResult = 0;
+        operator = "";
+        createUI();
+    }
+
+    private void createUI() {
+        setTitle("Calculator de Buzunar");
+        setSize(400, 500);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+        display = new JTextField();
+        display.setEditable(false);
+        display.setFont(new Font("Arial", Font.BOLD, 24));
+        add(display, BorderLayout.NORTH);
+
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(4, 4, 10, 10));
+        addButtons(buttonPanel);
+        add(buttonPanel, BorderLayout.CENTER);
+
+        // Adaugă KeyListener pentru a permite introducerea de la tastatură
+        display.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                char key = e.getKeyChar();
+                if (Character.isDigit(key) || "+-*/".indexOf(key) >= 0) {
+                    handleInput(String.valueOf(key));
+                } else if (key == KeyEvent.VK_ENTER) {
+                    calculateResult();
+                } else if (key == KeyEvent.VK_BACK_SPACE) {
+                    clear();
+                }
+            }
+        });
+    }
+
+    private void addButtons(JPanel panel) {
+        String[] buttonLabels = {
+            "7", "8", "9", "/",
+            "4", "5", "6", "*",
+            "1", "2", "3", "-",
+            "0", "C", "=", "+"
+        };
+
+        for (String label : buttonLabels) {
+            JButton button = new JButton(label);
+            button.setFont(new Font("Arial", Font.PLAIN, 24));
+            button.addActionListener(new ButtonClickListener());
+            panel.add(button);
+        }
+    }
+
+    private class ButtonClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String command = e.getActionCommand();
+            switch (command) {
+                case "C":
+                    clear();
+                    break;
+                case "=":
+                    calculateResult();
+                    break;
+                default:
+                    handleInput(command);
+                    break;
+            }
+        }
+    }
+
+    private void clear() {
+        display.setText("");
+        currentResult = 0;
+        operator = "";
+    }
+
+    private void handleInput(String command) {
+        if ("+-*/".contains(command)) {
+            if (!display.getText().isEmpty()) {
+                double currentOperand = Double.parseDouble(display.getText());
+                if (operator.isEmpty()) {
+                    currentResult = currentOperand; // Prima operație
+                } else {
+                    currentResult = performCalculation(currentResult, currentOperand, operator);
+                }
+                operator = command; // Setează noul operator
+                display.setText(""); // Resetează pentru următorul operand
+            }
+        } else {
+            display.setText(display.getText() + command);
+        }
+    }
+
+    private double performCalculation(double a, double b, String operator) {
+        switch (operator) {
+            case "+":
+                return calculator.add(a, b);
+            case "-":
+                return calculator.subtract(a, b);
+            case "*":
+                return calculator.multiply(a, b);
+            case "/":
+                return calculator.divide(a, b);
+            default:
+                return 0;
+        }
+    }
+
+    private void calculateResult() {
+        if (display.getText().isEmpty() || operator == null || operator.isEmpty()) {
+            display.setText("Input invalid");
+            return;
+        }
+
+        double secondOperand;
+        try {
+            secondOperand = Double.parseDouble(display.getText());
+            currentResult = performCalculation(currentResult, secondOperand, operator);
+            display.setText(String.valueOf(currentResult)); // Afișează rezultatul final
+            operator = ""; // Resetează operatorul
+        } catch (NumberFormatException e) {
+            display.setText("Input invalid");
+        }
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Calculator operatii = new Calculator();
+            operatii.setVisible(true);
+        });
+    }
+}
+
+
+
